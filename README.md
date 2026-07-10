@@ -29,7 +29,7 @@ python main.py
 ```
 
 `--system-site-packages` is required so the venv can see the system GTK/AppIndicator3
-bindings needed for the Linux tray backend (see above). On macOS/Windows this flag is
+bindings needed for the Linux tray backend. On macOS/Windows this flag is
 harmless but unnecessary.
 
 ## Notes

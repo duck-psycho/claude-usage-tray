@@ -9,22 +9,6 @@ the `claude` CLI already.
 
 ![Tray icon and menu](images/screenshot.png)
 
-## System requirements
-
-`pystray` needs a platform-specific tray backend. On macOS and Windows, pip pulls it in
-automatically as a dependency of `pystray` itself -- no extra system install needed. On
-Linux, the GTK/AppIndicator bindings are **not** pip-installable and must already be present
-on the system:
-
-- **Linux (Debian/Ubuntu)**:
-  ```
-  sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0 gir1.2-appindicator3-0.1 libayatana-appindicator3-1
-  ```
-  (Other distros: install the equivalent PyGObject + GTK3 + AppIndicator3 packages via your
-  package manager, e.g. `python3-gobject`/`libappindicator-gtk3` on Fedora.)
-- **macOS**: nothing extra -- `pip install pystray` pulls in `pyobjc-framework-Cocoa`.
-- **Windows**: nothing extra -- `pip install pystray` pulls in `pywin32`.
-
 ## Setup & Run
 
 ```

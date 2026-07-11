@@ -11,32 +11,25 @@ the `claude` CLI already.
 
 ## Setup & Run
 
-```
-./start.sh
-```
-
-This creates `.venv` (with `--system-site-packages`, needed on Linux so the venv can see the
-system GTK/AppIndicator3 bindings -- see above), installs `requirements.txt` on first run,
-then launches the tray app. Subsequent runs just activate the existing venv and start it.
-
-### Manual setup
+Requires the [Rust toolchain](https://rustup.rs).
 
 ```
-python3 -m venv --system-site-packages .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python main.py
+cargo run --release
 ```
 
-`--system-site-packages` is required so the venv can see the system GTK/AppIndicator3
-bindings needed for the Linux tray backend. On macOS/Windows this flag is
-harmless but unnecessary.
+The resulting binary (`target/release/claude-usage-tray`) is standalone -- copy it wherever
+you like.
+
+No system libraries are required on any platform: Linux uses the StatusNotifierItem D-Bus
+protocol directly (via `ksni`), not GTK/AppIndicator; Windows and macOS use their native tray
+APIs. TLS is statically linked (`rustls`), and the tray icon's font is embedded in the binary.
 
 ## Notes
 
-- Polls every 180 seconds by default (see `constants.py`).
+- Polls every 180 seconds by default (see `src/constants.rs`).
 - Token refresh uses a reverse-engineered, unofficial endpoint. If it stops working, the
   tray shows an auth-error state instead of crashing; you can override the refresh URL with
   the `CLAUDE_USAGE_TRAY_OAUTH_TOKEN_URL` environment variable.
-- On Linux, left- and right-click are the same event (AppIndicator/StatusNotifierItem) --
-  any click opens the menu.
+- On Linux, left- and right-click both open the menu (StatusNotifierItem convention).
+- The Windows/macOS backend follows the documented `tray-icon`/`muda`/`tao` APIs but has only
+  been built and run on Linux -- if you hit issues there, please open one.
